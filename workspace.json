@@ -1,6 +1,79 @@
 {
   "version": 2,
   "projects": {
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": ["apps/api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/api/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/api"],
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "api-util-interface": {
+      "root": "libs/api/util-interface",
+      "sourceRoot": "libs/api/util-interface/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api/util-interface/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api/util-interface"],
+          "options": {
+            "jestConfig": "libs/api/util-interface/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "store": {
       "projectType": "application",
       "root": "apps/store",
@@ -66,7 +139,10 @@
               "browserTarget": "store:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "apps/store/proxy.conf.json"
+          }
         },
         "extract-i18n": {
           "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -120,6 +196,31 @@
         }
       }
     },
+    "store-feature-game-detail": {
+      "projectType": "library",
+      "root": "libs/store/feature-game-detail",
+      "sourceRoot": "libs/store/feature-game-detail/src",
+      "prefix": "bg-hoard",
+      "targets": {
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/store/feature-game-detail"],
+          "options": {
+            "jestConfig": "libs/store/feature-game-detail/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/store/feature-game-detail/src/**/*.ts",
+              "libs/store/feature-game-detail/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "ui-shared": {
       "projectType": "library",
       "root": "libs/ui-shared",
@@ -141,6 +242,28 @@
               "libs/ui-shared/src/**/*.ts",
               "libs/ui-shared/src/**/*.html"
             ]
+          }
+        }
+      }
+    },
+    "util-formatters": {
+      "root": "libs/util-formatters",
+      "sourceRoot": "libs/util-formatters/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/util-formatters/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/util-formatters"],
+          "options": {
+            "jestConfig": "libs/util-formatters/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

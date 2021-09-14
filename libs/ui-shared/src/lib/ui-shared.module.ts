@@ -10,7 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     HeaderComponent
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent, UiSharedModule,
   ],
 })
 export class UiSharedModule {}
