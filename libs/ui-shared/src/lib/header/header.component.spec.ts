@@ -17,9 +17,16 @@ describe('HeaderComponent', () => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    cy.visit(
+      '/iframe.html?id=headercomponent--primary&args=title:BoardGameHoard;'
+   )
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show the title', () => {
+    cy.get('bg-hoard-header').contains('BoardGameHoard');
   });
 });
