@@ -11,6 +11,30 @@
         "$source": "argv",
         "index": 0
       }
+    },
+    "directory": {
+      "type": {
+        "type": "string",
+        "description": "scope of lib",
+        "x-prompt": {
+          "message": "Which type of library would you like to generate?",
+          "type": "list",
+          "items": [
+            {
+              "value": "store",
+              "label": "store"
+            },
+            {
+              "value": "api",
+              "label": "api"
+            },
+            {
+              "value": "shared",
+              "label": "shared"
+            }
+          ]
+        }
+      }
     }
   },
   "required": ["name"]
